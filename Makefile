@@ -140,7 +140,7 @@ define contents_xcworkspacedata
 endef
 export contents_xcworkspacedata
 
-$(WORKSPACE_CONTENTS): Makefile
+$(WORKSPACE_CONTENTS): Makefile $(EXAMPLES_DIR)
 	rm -rf $(WORKSPACE)
 	mkdir -p $(dir $@)
 	echo "$$contents_xcworkspacedata" > $@
