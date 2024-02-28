@@ -19,7 +19,7 @@ extension LoggingSystem {
     /// - Parameter logLevel: The minimum log level.
     public static func bootstrapInternal(logLevel: Logger.Level) {
         LoggingSystem.bootstrapInternal { label in
-            var handler = StreamLogHandler.standardOutput(label: label)
+            var handler = StreamLogHandler.standardError(label: label)
             handler.logLevel = logLevel
             return handler
         }
