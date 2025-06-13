@@ -21,9 +21,9 @@ import Tracing
 enum ServerMiddlewareExample {
     static func main() async throws {
         // Bootstrap the observability backends with default configuration.
-        // TODO: Uncomment this line when the 1.0 API is ready.
-        // let observability = try OTel.bootstrap()
-        let observability: ServiceGroup! = nil
+        var config = OTel.Configuration.default
+        config.logs.enabled = false // Logs not implemented yet, will error.
+        let observability = try OTel.bootstrap(configuration: config)
 
         // Create an HTTP server with instrumentation middlewares added.
         let router = Router()
