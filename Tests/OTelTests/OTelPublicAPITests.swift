@@ -33,10 +33,7 @@ import Testing
         _ = try OTel.makeMetricsBackend()
     }
 
-    @Test func testMakeTracingBackend() {
-        let error = #expect(throws: (any Error).self) {
-            try OTel.makeTracingBackend()
-        }
-        #expect((error as? CustomStringConvertible)?.description == "Not implemented")
+    @Test func testMakeTracingBackend() throws {
+        _ = try OTel.makeTracingBackend()
     }
 }
