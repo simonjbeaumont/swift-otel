@@ -36,4 +36,10 @@ import Testing
     @Test func testMakeTracingBackend() throws {
         _ = try OTel.makeTracingBackend()
     }
+
+    @Test func testBootstrapSupportedSubset() throws {
+        var config = OTel.Configuration.default
+        config.logs.enabled = false
+        _ = try OTel.bootstrap(configuration: config)
+    }
 }
