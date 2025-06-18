@@ -3,6 +3,8 @@ receivers:
     protocols:
       grpc:
         endpoint: "127.0.0.1:4317"
+      http:
+        endpoint: "127.0.0.1:4318"
 
 exporters:
   file:
@@ -12,6 +14,9 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [file]
+      exporters: [file, debug]
+    metrics:
+      receivers: [otlp]
+      exporters: [file, debug]
 
 # yaml-language-server: $schema=https://raw.githubusercontent.com/srikanthccv/otelcol-jsonschema/main/schema.json
