@@ -11,23 +11,51 @@
 //
 //===----------------------------------------------------------------------===//
 
+import class Foundation.ProcessInfo
 package import Logging
+import NIOConcurrencyHelpers
+
+extension OTel {
+    fileprivate static let lockedDiagnosticsLogger = NIOLockedValueBox(Logger(label: "swift-otel", factory: { label in StreamLogHandler.standardError(label: label) }))
+    package static var diagnosticsLogger: Logger {
+        get {
+            lockedDiagnosticsLogger.withLockedValue { $0 }
+        }
+        set {
+            lockedDiagnosticsLogger.withLockedValue { $0 = newValue }
+        }
+    }
+}
 
 extension OTel.Configuration {
-    package func diagnosticsLogger(component: String) -> Logger {
+    package var diagnosticLogger: Logger {
         var logger = switch self.logger.backing {
         case .console:
             Logger(label: "swift-otel", factory: { label in StreamLogHandler.standardError(label: label) })
         case .custom(let logger):
             logger
         }
-        logger.logLevel = Logger.Level(self.logLevel)
+        // Environment variable overrides may not have been applied, so we explicitly check here.
+        logger.logLevel = Self.logLevelEnvironmentOverride ?? Logger.Level(self.logLevel)
         return logger
     }
+
+    fileprivate static let logLevelEnvironmentOverride: Logger.Level? = {
+        switch ProcessInfo.processInfo.environment.getStringValue(.logLevel) {
+        case "trace": .trace
+        case "debug": .debug
+        case "info": .info
+        case "notice": .notice
+        case "warning": .warning
+        case "error": .error
+        case "critical": .critical
+        default: nil
+        }
+    }()
 }
 
-fileprivate extension Logger.Level {
-    init(_ level: OTel.Configuration.LogLevel) {
+extension Logger.Level {
+    fileprivate init(_ level: OTel.Configuration.LogLevel) {
         switch level.backing {
         case .debug:
             self = .debug

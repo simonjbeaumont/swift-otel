@@ -11,7 +11,108 @@
 //
 //===----------------------------------------------------------------------===//
 
+extension OTel.Configuration.Key {
+    var environmentVariableKey: String {
+        switch self {
+        case .single(let generalKey):
+            generalKey.key
+        case .signalSpecific(let signalSpecificKey, let signal):
+            switch signal {
+            case .logs: signalSpecificKey.logs
+            case .metrics: signalSpecificKey.metrics
+            case .traces: signalSpecificKey.traces
+            }
+        }
+    }
+}
+
 extension OTel.Configuration {
+    fileprivate func logOverride(
+        key: OTel.Configuration.Key,
+        previousValue: String,
+        newValue: String,
+        unsupportedValues: [any StringProtocol] = [],
+        supportedValues: [String]
+    ) {
+        var logger = diagnosticLogger
+        let message = "Overriding configuration"
+
+        logger[metadataKey: "key"] = "\(key.environmentVariableKey)"
+        logger[metadataKey: "previous_value"] = "\(previousValue)"
+        logger[metadataKey: "new_value"] = "\(newValue)"
+        logger[metadataKey: "unsupported_values"] = "\(unsupportedValues)"
+        logger[metadataKey: "supported_values"] = "\(supportedValues)"
+
+        if unsupportedValues.isEmpty {
+            logger.info("\(message)")
+        } else {
+            logger.warning("\(message)")
+        }
+    }
+
+    fileprivate func logOverride<T>(
+        key: OTel.Configuration.Key,
+        previousValue: T,
+        newValue: T,
+        unsupportedValues: [any StringProtocol] = []
+    ) where T: OTelEnvironmentVariableRepresentable {
+        logOverride(
+            key: key,
+            previousValue: previousValue.environmentVariableValue,
+            newValue: newValue.environmentVariableValue,
+            unsupportedValues: unsupportedValues,
+            supportedValues: T.supportedEnvironmentVariableValues
+        )
+    }
+
+    fileprivate func logOverride<T>(
+        key: OTel.Configuration.Key,
+        previousValues: [T],
+        newValues: [T],
+        unsupportedValues: [any StringProtocol] = []
+    ) where T: OTelEnvironmentVariableRepresentable {
+        logOverride(
+            key: key,
+            previousValue: previousValues.map(\.environmentVariableValue).joined(separator: ","),
+            newValue: newValues.map((\.environmentVariableValue)).joined(separator: ","),
+            unsupportedValues: unsupportedValues,
+            supportedValues: T.supportedEnvironmentVariableValues
+        )
+    }
+
+    fileprivate func maybeOverride<T>(
+        value: inout T,
+        with proposedValue: String,
+        from key: OTel.Configuration.Key
+    ) where T: OTelEnvironmentVariableRepresentable {
+        var ignored: [String] = []
+        if let override = T(environmentVariableValue: proposedValue) {
+            value = override
+        } else {
+            ignored.append(proposedValue)
+        }
+        logOverride(key: key, previousValue: value, newValue: value, unsupportedValues: ignored)
+    }
+
+    fileprivate func maybeOverride<T>(
+        values: inout [T],
+        with proposedValues: String,
+        from key: OTel.Configuration.Key
+    ) where T: OTelEnvironmentVariableRepresentable {
+        var supportedNewValues = [T]()
+        var ignored = [Substring]()
+        for proposedValue in proposedValues.split(separator: ",") {
+            if let element = T(environmentVariableValue: String(proposedValue)) {
+                supportedNewValues.append(element)
+            } else {
+                ignored.append(proposedValue)
+                continue
+            }
+        }
+        logOverride(key: key, previousValues: values, newValues: supportedNewValues, unsupportedValues: ignored)
+        values = supportedNewValues
+    }
+
     package mutating func applyEnvironmentOverrides(environment: [String: String]) {
         if let resourceAttributes = environment.getHeadersValue(.resourceAttributes) {
             // https://opentelemetry.io/docs/specs/otel/resource/sdk/#specifying-resource-information-via-an-environment-variable
@@ -25,6 +126,7 @@ extension OTel.Configuration {
             self.diagnosticLogLevel = .init(backing: diagnosticLogLevel)
         }
         if let propagators = environment.getStringValue(.propagators) {
+            maybeOverride(values: &self.propagators, with: propagators, from: .single(.propagators))
             self.propagators.removeAll()
             for propagator in propagators.split(separator: ",") {
                 switch propagator {
@@ -244,4 +346,28 @@ extension OTel.Configuration.OTLPExporterConfiguration {
             self.timeout = timeout
         }
     }
+}
+
+enum OTelBool: String, CaseIterable {
+    case `true`, `false`
+}
+
+extension OTelBool: OTelEnvironmentVariableRepresentable {}
+extension Bool {
+    init(_ value: OTelBool) {
+        switch value {
+        case .true: self = true
+        case .false: self = false
+        }
+    }
+}
+
+extension OTel.Configuration.Propagator: OTelEnvironmentVariableRepresentable {
+    init?(environmentVariableValue: String) {
+        guard let backing = Backing(environmentVariableValue: environmentVariableValue) else { return nil }
+        self.init(backing: backing)
+    }
+
+    var environmentVariableValue: String { backing.environmentVariableValue }
+    static var supportedEnvironmentVariableValues: [String] { Backing.supportedEnvironmentVariableValues }
 }

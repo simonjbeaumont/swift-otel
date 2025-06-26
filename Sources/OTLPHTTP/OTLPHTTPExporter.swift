@@ -74,7 +74,7 @@ final class OTLPHTTPExporter<Request: Message, Response: Message>: Sendable {
         let response = try await self.httpClient.execute(request, timeout: .init(self.configuration.timeout))
         switch response.status {
         case .ok:
-            break
+            OTel.diagnosticsLogger.debug("success")
         case .tooManyRequests, .badGateway, .serviceUnavailable, .gatewayTimeout:
             // https://opentelemetry.io/docs/specs/otlp/#retryable-response-codes
             // https://opentelemetry.io/docs/specs/otlp/#otlphttp-throttling

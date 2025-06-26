@@ -137,7 +137,7 @@ extension OTel {
             resourceAttributes: [:],
             diagnosticLogger: .console,
             diagnosticLogLevel: .info,
-            propagators: [.traceContext, .baggage],
+            propagators: [.traceContext],
             traces: .default,
             metrics: .default,
             logs: .default
@@ -205,11 +205,11 @@ extension OTel.Configuration {
     /// Propagators handle the injection and extraction of trace context and baggage
     /// from carriers such as HTTP headers, enabling trace continuity in distributed systems.
     public struct Propagator: Sendable {
-        package enum Backing: Sendable {
-            case traceContext
+        package enum Backing: String, CaseIterable, Sendable {
+            case traceContext = "tracecontext"
             case baggage
             case b3
-            case b3Multi
+            case b3Multi = "b3multi"
             case jaeger
             case xray
             case otTrace
@@ -222,21 +222,27 @@ extension OTel.Configuration {
         public static let traceContext: Self = .init(backing: .traceContext)
 
         /// W3C Baggage propagator for cross-cutting concerns.
+//        @available(*, unavailable, message: "This option is not supported by Swift OTel")
         public static let baggage: Self = .init(backing: .baggage)
 
         /// B3 single header propagator (Zipkin format).
+//        @available(*, unavailable, message: "This option is not supported by Swift OTel")
         public static let b3: Self = .init(backing: .b3)
 
         /// B3 multi-header propagator (Zipkin format).
+//        @available(*, unavailable, message: "This option is not supported by Swift OTel")
         public static let b3Multi: Self = .init(backing: .b3Multi)
 
         /// Jaeger propagator for Jaeger tracing systems.
+//        @available(*, unavailable, message: "This option is not supported by Swift OTel")
         public static let jaeger: Self = .init(backing: .jaeger)
 
         /// AWS X-Ray propagator for AWS environments.
+//        @available(*, unavailable, message: "This option is not supported by Swift OTel")
         public static let xray: Self = .init(backing: .xray)
 
         /// OpenTracing propagator for legacy OpenTracing systems.
+//        @available(*, unavailable, message: "This option is not supported by Swift OTel")
         public static let otTrace: Self = .init(backing: .otTrace)
 
         /// No-op propagator that performs no context propagation.

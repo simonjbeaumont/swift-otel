@@ -413,6 +413,8 @@ extension OTel {
                 #endif
             }
         case .console, .jaeger, .zipkin:
+            // spec says to log as a warning and revert to default
+            // options: log warning, throw error, remove symbol, unavailable symbols
             fatalError("not implementated")
         }
     }

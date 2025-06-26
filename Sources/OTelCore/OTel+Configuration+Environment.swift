@@ -80,9 +80,9 @@ extension [String: String] {
     func getStringValue(_ lookup: OTel.Configuration.Key) -> String? {
         switch lookup {
         case .single(let generalKey):
-            self.getStringValue(generalKey)
+            getStringValue(generalKey)
         case .signalSpecific(let signalSpecificKey, let signal):
-            self.getStringValue(signalSpecificKey, signal: signal)
+            getStringValue(signalSpecificKey, signal: signal)
         }
     }
 
@@ -194,4 +194,22 @@ extension [String: String] {
     func getEnumValue<E: RawRepresentable<String>>(of type: E.Type = E.self, _ key: OTel.Configuration.Key.SignalSpecificKey, signal: OTel.Configuration.Key.Signal) -> E? {
         getEnumValue(of: type, .signalSpecific(key, signal))
     }
+}
+
+protocol OTelEnvironmentVariableRepresentable {
+    init?(environmentVariableValue: String)
+
+    var environmentVariableValue: String { get }
+
+    static var supportedEnvironmentVariableValues: [String] { get }
+}
+
+extension RawRepresentable where RawValue == String {
+    init?(environmentVariableValue: String) { self.init(rawValue: environmentVariableValue) }
+
+    var environmentVariableValue: String { rawValue }
+}
+
+extension CaseIterable where AllCases.Element: RawRepresentable, AllCases.Element.RawValue == String {
+    static var supportedEnvironmentVariableValues: [String] { Self.allCases.map(\.rawValue) }
 }
