@@ -21,7 +21,22 @@ extension OTel.Configuration {
         case .custom(let logger):
             logger
         }
-        logger.handler.metadata["otel.component"] = .string(component)
+        logger.logLevel = Logger.Level(self.logLevel)
         return logger
+    }
+}
+
+fileprivate extension Logger.Level {
+    init(_ level: OTel.Configuration.LogLevel) {
+        switch level.backing {
+        case .debug:
+            self = .debug
+        case .info:
+            self = .info
+        case .warning:
+            self = .warning
+        case .error:
+            self = .error
+        }
     }
 }
