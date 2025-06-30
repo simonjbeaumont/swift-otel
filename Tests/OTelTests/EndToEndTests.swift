@@ -18,6 +18,7 @@ import Metrics
 import NIOTestUtils
 import OTel
 import OTLPCore
+import OTLPGRPCTests
 import ServiceLifecycle
 import Testing
 import Tracing
@@ -146,6 +147,12 @@ import Tracing
             }
         }
     }
+
+//    @Test func testTracesGRPCExportUsingBootstrap() async throws {
+//        try await OTLPGRPCMockCollector.withInsecureServer { collector, endpoint in
+//
+//        }
+//    }
 
     @Test func testMetricsProtobufExportUsingBootstrap() async throws {
         /// Note: It's easier to debug this test by commenting out the surrounding `#expect(procesExitsWith:_:)`.

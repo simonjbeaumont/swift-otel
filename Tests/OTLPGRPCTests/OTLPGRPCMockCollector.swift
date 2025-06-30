@@ -18,12 +18,12 @@ import OTLPGRPC
 import SwiftProtobuf
 import XCTest
 
-final class OTLPGRPCMockCollector: Sendable {
+package final class OTLPGRPCMockCollector: Sendable {
     let recordingMetricsService = RecordingMetricsService()
     let recordingTraceService = RecordingTraceService()
 
     @discardableResult
-    static func withInsecureServer<T>(operation: (_ collector: OTLPGRPCMockCollector, _ endpoint: String) async throws -> T) async throws -> T {
+    package static func withInsecureServer<T>(operation: (_ collector: OTLPGRPCMockCollector, _ endpoint: String) async throws -> T) async throws -> T {
         let collector = self.init()
         let server = GRPCServer(
             transport: .http2NIOPosix(address: .ipv4(host: "127.0.0.1", port: 0), transportSecurity: .plaintext),
@@ -42,7 +42,7 @@ final class OTLPGRPCMockCollector: Sendable {
     }
 
     @discardableResult
-    static func withSecureServer<T>(
+    package static func withSecureServer<T>(
         operation: (_ collector: OTLPGRPCMockCollector, _ endpoint: String, _ trustRootsPath: String) async throws -> T
     ) async throws -> T {
         try await withTemporaryDirectory { tempDir in
