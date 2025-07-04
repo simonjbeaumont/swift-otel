@@ -54,17 +54,28 @@ extension OTel.Configuration {
     }()
 }
 
-//extension Logger.Level {
-//    fileprivate init(_ level: OTel.Configuration.LogLevel) {
-//        switch level.backing {
-//        case .debug:
-//            self = .debug
-//        case .info:
-//            self = .info
-//        case .warning:
-//            self = .warning
-//        case .error:
-//            self = .error
-//        }
-//    }
-//}
+extension Logger {
+    package init(configuration: OTel.Configuration) {
+        self = switch configuration.diagnosticLogger.backing {
+        case .console:
+            Logger(label: "swift-otel", factory: { label in StreamLogHandler.standardError(label: label) })
+        case .custom(let logger):
+            logger
+        }
+        // Environment variable overrides may not have been applied, so we explicitly check here.
+        self.logLevel = Self.logLevelEnvironmentOverride ?? Logger.Level(configuration.diagnosticLogLevel)
+    }
+
+    fileprivate static let logLevelEnvironmentOverride: Logger.Level? = {
+        switch ProcessInfo.processInfo.environment.getStringValue(.logLevel) {
+        case "trace": .trace
+        case "debug": .debug
+        case "info": .info
+        case "notice": .notice
+        case "warning": .warning
+        case "error": .error
+        case "critical": .critical
+        default: nil
+        }
+    }()
+}
