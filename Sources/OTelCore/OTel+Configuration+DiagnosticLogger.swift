@@ -54,17 +54,17 @@ extension OTel.Configuration {
     }()
 }
 
-extension Logger.Level {
-    fileprivate init(_ level: OTel.Configuration.LogLevel) {
-        switch level.backing {
-        case .debug:
-            self = .debug
-        case .info:
-            self = .info
-        case .warning:
-            self = .warning
-        case .error:
-            self = .error
-        }
-    }
-}
+//extension Logger.Level {
+//    fileprivate init(_ level: OTel.Configuration.LogLevel) {
+//        switch level.backing {
+//        case .debug:
+//            self = .debug
+//        case .info:
+//            self = .info
+//        case .warning:
+//            self = .warning
+//        case .error:
+//            self = .error
+//        }
+//    }
+//}
