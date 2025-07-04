@@ -34,7 +34,7 @@ extension OTel.Configuration {
         unsupportedValues: [any StringProtocol] = [],
         supportedValues: [String]
     ) {
-        var logger = diagnosticLogger
+        var logger = _diagnosticLogger
         let message = "Overriding configuration"
 
         logger[metadataKey: "key"] = "\(key.environmentVariableKey)"

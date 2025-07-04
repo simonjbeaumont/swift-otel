@@ -28,15 +28,15 @@ extension OTel {
 }
 
 extension OTel.Configuration {
-    package var diagnosticLogger: Logger {
-        var logger = switch self.logger.backing {
+    package var _diagnosticLogger: Logger {
+        var logger = switch self.diagnosticLogger.backing {
         case .console:
             Logger(label: "swift-otel", factory: { label in StreamLogHandler.standardError(label: label) })
         case .custom(let logger):
             logger
         }
         // Environment variable overrides may not have been applied, so we explicitly check here.
-        logger.logLevel = Self.logLevelEnvironmentOverride ?? Logger.Level(self.logLevel)
+        logger.logLevel = Self.logLevelEnvironmentOverride ?? Logger.Level(self.diagnosticLogLevel)
         return logger
     }
 
