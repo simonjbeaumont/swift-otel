@@ -15,6 +15,7 @@ import NIOConcurrencyHelpers
 package import OTelCore
 
 /// An in-memory log record processor, collecting emitted log records into ``onEmit(_:)``.
+@available(macOSAligned 13, *)
 package final class OTelInMemoryLogRecordProcessor: OTelLogRecordProcessor {
     package var records: [OTelLogRecord] { _records.withLockedValue { $0 } }
     private let _records = NIOLockedValueBox<[OTelLogRecord]>([])

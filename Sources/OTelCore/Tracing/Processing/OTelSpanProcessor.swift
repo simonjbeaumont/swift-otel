@@ -22,6 +22,7 @@ package import ServiceLifecycle
 /// ### Implementation Notes
 ///
 /// On shutdown, processors forwarding spans to an ``OTelSpanExporter`` MUST shutdown that exporter.
+@available(macOSAligned 13, *)
 package protocol OTelSpanProcessor: Service & Sendable {
     /// Called whenever a new recording span was started.
     ///
@@ -39,6 +40,7 @@ package protocol OTelSpanProcessor: Service & Sendable {
     func forceFlush() async throws
 }
 
+@available(macOSAligned 13, *)
 extension OTelSpanProcessor {
     package func onStart(_ span: OTelSpan, parentContext: ServiceContext) async {}
 }

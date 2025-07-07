@@ -16,6 +16,7 @@ package import ServiceLifecycle
 /// A span exporter receives batches of processed logs to export them, e.g. by sending them over the network.
 ///
 /// [OpenTelemetry specification: Log exporter](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/logs/sdk.md#logrecordexporter)
+@available(macOSAligned 13, *)
 package protocol OTelLogRecordExporter: Service, Sendable {
     /// Export the given batch of logs.
     ///

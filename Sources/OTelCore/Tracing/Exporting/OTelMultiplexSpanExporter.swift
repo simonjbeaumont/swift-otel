@@ -12,6 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /// A pseudo-``OTelSpanExporter`` that may be used to export using multiple other ``OTelSpanExporter``s.
+@available(macOSAligned 13, *)
 package struct OTelMultiplexSpanExporter: OTelSpanExporter {
     private let exporters: [any OTelSpanExporter]
 

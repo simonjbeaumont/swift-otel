@@ -23,6 +23,7 @@ import OTLPGRPC
 import OTLPHTTP
 #endif
 
+@available(macOSAligned 13, *)
 extension OTel {
     /// Create a logging backend with an OTLP exporter.
     ///
@@ -109,7 +110,6 @@ extension OTel {
     ///   - `OTel.makeMetricsBackend(configuration:)` for metrics backend creation
     ///   - `OTel.makeTracingBackend(configuration:)` for tracing backend creation
     ///   - `OTel.Configuration` for configuration options and environment variables
-    @available(macOSAligned 13, *)
     public static func makeLoggingBackend(configuration: OTel.Configuration = .default) throws -> (factory: @Sendable (String) -> any LogHandler, service: some Service) {
         /// This is necessary because the processor is generic over the exporter and we need to return an opaque type.
         struct Wrapper: Service {
@@ -125,6 +125,9 @@ extension OTel {
             switch configuration.logs.otlpExporter.protocol.backing {
             case .grpc:
                 #if OTLPGRPC
+                guard #available(macOSAligned 15, *) else {
+                    fatalError("Using the OTLP/GRPC exporter requires newer platform macOS 15+.")
+                }
                 let exporter = try OTLPGRPCLogRecordExporter(configuration: configuration.logs.otlpExporter)
                 let processor = OTelBatchLogRecordProcessor(exporter: exporter, configuration: .init(configuration: configuration.logs.batchLogRecordProcessor))
                 let handler = OTelLogHandler(
@@ -243,7 +246,6 @@ extension OTel {
     ///   - `OTel.makeLoggingBackend(configuration:)` for logging backend creation
     ///   - `OTel.makeTracingBackend(configuration:)` for tracing backend creation
     ///   - `OTel.Configuration` for configuration options and environment variables
-    @available(macOSAligned 13, *)
     public static func makeMetricsBackend(configuration: OTel.Configuration = .default) throws -> (factory: any MetricsFactory, service: some Service) {
         let resource = OTelResource(configuration: configuration)
         let registry = OTelMetricRegistry()
@@ -253,6 +255,9 @@ extension OTel {
             switch configuration.metrics.otlpExporter.protocol.backing {
             case .grpc:
                 #if OTLPGRPC
+                guard #available(macOSAligned 15, *) else {
+                    fatalError("Using the OTLP/GRPC exporter requires newer platform macOS 15+.")
+                }
                 metricsExporter = try OTLPGRPCMetricExporter(configuration: configuration.metrics.otlpExporter)
                 #else // OTLPGRPC
                 fatalError("Using the OTLP/GRPC exporter requires the `OTLPGRPC` trait enabled.")
@@ -362,7 +367,6 @@ extension OTel {
     ///   - `OTel.makeLoggingBackend(configuration:)` for logging backend creation
     ///   - `OTel.makeMetricsBackend(configuration:)` for metrics backend creation
     ///   - `OTel.Configuration` for configuration options and environment variables
-    @available(macOSAligned 13, *)
     public static func makeTracingBackend(configuration: OTel.Configuration = .default) throws -> (factory: any Tracer, service: some Service) {
         /// This dance is necessary if we want to continue to return `some Service` (vs. returning `any Service`).
         ///
@@ -384,6 +388,9 @@ extension OTel {
             switch configuration.traces.otlpExporter.protocol.backing {
             case .grpc:
                 #if OTLPGRPC
+                guard #available(macOSAligned 15, *) else {
+                    fatalError("Using the OTLP/GRPC exporter requires newer platform macOS 15+.")
+                }
                 let exporter = try OTLPGRPCSpanExporter(configuration: configuration.traces.otlpExporter)
                 let processor = OTelBatchSpanProcessor(exporter: exporter, configuration: .init(configuration: configuration.traces.batchSpanProcessor))
                 let tracer = OTelTracer(

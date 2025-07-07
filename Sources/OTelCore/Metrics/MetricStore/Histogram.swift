@@ -33,6 +33,7 @@ protocol Bucketable: AdditiveArithmetic, Comparable, Sendable {
 }
 
 /// A Histogram to record timings.
+@available(macOSAligned 13, *)
 typealias DurationHistogram = Histogram<Duration>
 /// A Histogram to record floating point values.
 typealias ValueHistogram = Histogram<Double>
@@ -97,6 +98,7 @@ final class Histogram<Value: Bucketable>: Sendable {
     }
 }
 
+@available(macOSAligned 13, *)
 extension Duration: Bucketable {
     var bucketRepresentation: Double {
         let attos = String(unsafeUninitializedCapacity: 18) { buffer in

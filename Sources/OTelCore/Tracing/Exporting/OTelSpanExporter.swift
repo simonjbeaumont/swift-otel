@@ -16,6 +16,7 @@ package import ServiceLifecycle
 /// A span exporter receives batches of processed spans to export them, e.g. by sending them over the network.
 ///
 /// [OpenTelemetry specification: Span exporter](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/trace/sdk.md#span-exporter)
+@available(macOSAligned 13, *)
 package protocol OTelSpanExporter: Service, Sendable {
     /// Export the given batch of spans.
     ///

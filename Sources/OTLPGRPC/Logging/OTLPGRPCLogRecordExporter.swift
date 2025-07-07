@@ -15,6 +15,7 @@ import GRPCNIOTransportHTTP2
 package import OTelCore
 import OTLPCore
 
+@available(macOSAligned 15, *)
 package final class OTLPGRPCLogRecordExporter: OTelLogRecordExporter {
     typealias Client = Opentelemetry_Proto_Collector_Logs_V1_LogsService.Client<HTTP2ClientTransport.Posix>
     private let client: OTLPGRPCExporter<Client>

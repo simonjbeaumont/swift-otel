@@ -14,6 +14,7 @@
 import NIOConcurrencyHelpers
 package import OTelCore
 
+@available(macOSAligned 13, *)
 package actor OTelInMemoryLogRecordExporter: OTelLogRecordExporter {
     package private(set) var exportedBatches = [[OTelLogRecord]]()
     package private(set) var numberOfShutdowns = 0

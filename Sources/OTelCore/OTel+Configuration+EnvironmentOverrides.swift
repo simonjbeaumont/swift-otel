@@ -11,6 +11,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.Key {
     var environmentVariableKey: String {
         switch self {
@@ -26,6 +27,7 @@ extension OTel.Configuration.Key {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration {
     fileprivate func logOverride(
         key: OTel.Configuration.Key,
@@ -157,6 +159,7 @@ extension OTel.Configuration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.TracesConfiguration {
     internal mutating func applyEnvironmentOverrides(environment: [String: String]) {
         batchSpanProcessor.applyEnvironmentOverrides(environment: environment)
@@ -180,6 +183,7 @@ extension OTel.Configuration.TracesConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.MetricsConfiguration {
     internal mutating func applyEnvironmentOverrides(environment: [String: String]) {
         if let metricExportInterval = environment.getDurationValue(.metricExportInterval) {
@@ -206,6 +210,7 @@ extension OTel.Configuration.MetricsConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.LogsConfiguration {
     internal mutating func applyEnvironmentOverrides(environment: [String: String]) {
         batchLogRecordProcessor.applyEnvironmentOverrides(environment: environment)
@@ -225,6 +230,7 @@ extension OTel.Configuration.LogsConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.TracesConfiguration.BatchSpanProcessorConfiguration {
     internal mutating func applyEnvironmentOverrides(environment: [String: String]) {
         if let scheduleDelay = environment.getDurationValue(.batchSpanProcessorScheduleDelay) {
@@ -242,6 +248,7 @@ extension OTel.Configuration.TracesConfiguration.BatchSpanProcessorConfiguration
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.LogsConfiguration.BatchLogRecordProcessorConfiguration {
     internal mutating func applyEnvironmentOverrides(environment: [String: String]) {
         if let scheduleDelay = environment.getDurationValue(.batchLogRecordProcessorScheduleDelay) {
@@ -259,6 +266,7 @@ extension OTel.Configuration.LogsConfiguration.BatchLogRecordProcessorConfigurat
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.OTLPExporterConfiguration {
     internal mutating func applyEnvironmentOverrides(environment: [String: String], signal: OTel.Configuration.Key.Signal) {
         if let `protocol` = environment.getStringValue(.otlpExporterProtocol, signal: signal) {
@@ -362,6 +370,7 @@ extension Bool {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.Propagator: OTelEnvironmentVariableRepresentable {
     init?(environmentVariableValue: String) {
         guard let backing = Backing(environmentVariableValue: environmentVariableValue) else { return nil }

@@ -14,6 +14,7 @@
 package import OTelCore
 
 /// A span exporter, streaming exported batches via an async sequence.
+@available(macOSAligned 13, *)
 package final actor OTelStreamingSpanExporter: OTelSpanExporter {
     package let batches: AsyncStream<[OTelFinishedSpan]>
     private let batchContinuation: AsyncStream<[OTelFinishedSpan]>.Continuation

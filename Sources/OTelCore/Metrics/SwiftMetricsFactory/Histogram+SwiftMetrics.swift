@@ -15,6 +15,7 @@ import CoreMetrics
 
 extension Histogram: _SwiftMetricsSendableProtocol {}
 
+@available(macOSAligned 13, *)
 extension Histogram: CoreMetrics.TimerHandler where Value == Duration {
     func recordNanoseconds(_ duration: Int64) {
         let value = Duration.nanoseconds(duration)

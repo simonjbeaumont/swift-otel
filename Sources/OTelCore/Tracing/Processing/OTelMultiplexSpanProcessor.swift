@@ -15,6 +15,7 @@ package import ServiceContextModule
 import ServiceLifecycle
 
 /// A pseudo-``OTelSpanProcessor`` that may be used to process using multiple other ``OTelSpanProcessor``s.
+@available(macOSAligned 13, *)
 package actor OTelMultiplexSpanProcessor: OTelSpanProcessor {
     private let processors: [any OTelSpanProcessor]
     private let shutdownStream: AsyncStream<Void>

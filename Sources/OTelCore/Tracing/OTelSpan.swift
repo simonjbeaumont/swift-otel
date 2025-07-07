@@ -15,6 +15,7 @@ import NIOConcurrencyHelpers
 package import Tracing
 
 /// A distributed tracing span, conforming to the [OpenTelemetry specification](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/trace/api.md#span).
+@available(macOSAligned 13, *)
 package final class OTelSpan: Span {
     private let underlying: Underlying
 

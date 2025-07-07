@@ -16,6 +16,7 @@ package import ServiceLifecycle
 /// Exports a batch of metrics.
 ///
 /// - Seealso: [OTel Specification for Metric Exporter](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/metrics/sdk.md#metricexporter)
+@available(macOSAligned 13, *)
 package protocol OTelMetricExporter: Service, Sendable {
     /// Export the given batch of metrics.
     ///

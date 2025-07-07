@@ -19,6 +19,7 @@ import ServiceLifecycle
 /// A span processor that batches finished spans and forwards them to a configured exporter.
 ///
 /// [OpenTelemetry Specification: Batching processor](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/trace/sdk.md#batching-processor)
+@available(macOSAligned 13, *)
 package actor OTelBatchSpanProcessor<Exporter: OTelSpanExporter, Clock: _Concurrency.Clock>:
     OTelSpanProcessor,
     Service,
@@ -144,6 +145,7 @@ package actor OTelBatchSpanProcessor<Exporter: OTelSpanExporter, Clock: _Concurr
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelBatchSpanProcessor where Clock == ContinuousClock {
     /// Create a batch span processor exporting span batches via the given span exporter.
     ///

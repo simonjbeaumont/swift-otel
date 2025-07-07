@@ -22,6 +22,7 @@ package import ServiceLifecycle
 /// ### Implementation Notes
 ///
 /// On shutdown, processors forwarding logs to an ``OTelLogRecordExporter`` MUST shutdown that exporter.
+@available(macOSAligned 13, *)
 package protocol OTelLogRecordProcessor: Service & Sendable {
     func onEmit(_ record: inout OTelLogRecord)
 

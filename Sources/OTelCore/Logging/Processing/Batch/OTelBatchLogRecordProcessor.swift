@@ -19,6 +19,7 @@ import ServiceLifecycle
 /// A log processor that batches logs and forwards them to a configured exporter.
 ///
 /// [OpenTelemetry Specification: Batching processor](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/logs/sdk.md#batching-processor)
+@available(macOSAligned 13, *)
 package actor OTelBatchLogRecordProcessor<Exporter: OTelLogRecordExporter, Clock: _Concurrency.Clock>:
     OTelLogRecordProcessor,
     Service,
@@ -141,6 +142,7 @@ package actor OTelBatchLogRecordProcessor<Exporter: OTelLogRecordExporter, Clock
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelBatchLogRecordProcessor where Clock == ContinuousClock {
     /// Create a batch log processor exporting log batches via the given log exporter.
     ///

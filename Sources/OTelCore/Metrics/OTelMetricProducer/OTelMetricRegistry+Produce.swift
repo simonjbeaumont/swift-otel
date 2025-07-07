@@ -11,6 +11,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+@available(macOSAligned 13, *)
 extension OTelMetricRegistry: OTelMetricProducer {
     package func produce() -> [OTelMetricPoint] {
         let metrics = storage.withLockedValue { $0 }

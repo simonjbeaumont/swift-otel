@@ -14,6 +14,7 @@
 package import ServiceContextModule
 
 /// A span processor that ignores all operations, used when no spans should be processed.
+@available(macOSAligned 13, *)
 package struct OTelNoOpSpanProcessor: OTelSpanProcessor, CustomStringConvertible {
     package let description = "OTelNoOpSpanProcessor"
 

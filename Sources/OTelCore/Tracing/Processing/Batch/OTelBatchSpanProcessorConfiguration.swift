@@ -12,6 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /// The configuration options for an ``OTelBatchSpanProcessor``.
+@available(macOSAligned 13, *)
 package struct OTelBatchSpanProcessorConfiguration: Sendable {
     /// The maximum queue size.
     ///

@@ -14,6 +14,7 @@
 package import OTelCore
 
 /// A log record exporter streaming exported batches via an async sequence.
+@available(macOSAligned 13, *)
 package final actor OTelStreamingLogRecordExporter: OTelLogRecordExporter {
     package let batches: AsyncStream<[OTelLogRecord]>
     private let batchContinuation: AsyncStream<[OTelLogRecord]>.Continuation

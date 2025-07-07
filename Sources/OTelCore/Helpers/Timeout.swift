@@ -11,6 +11,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+@available(macOSAligned 13, *)
 package func withTimeout<ClockType: Clock, ChildTaskResult>(
     _ timeout: ClockType.Duration,
     priority: TaskPriority? = nil,
@@ -29,6 +30,7 @@ package func withTimeout<ClockType: Clock, ChildTaskResult>(
     }
 }
 
+@available(macOSAligned 13, *)
 package func withTimeout<ChildTaskResult>(
     _ timeout: Duration,
     priority: TaskPriority? = nil,

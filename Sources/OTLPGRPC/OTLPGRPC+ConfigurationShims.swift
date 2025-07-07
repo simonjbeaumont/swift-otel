@@ -13,6 +13,7 @@
 
 package import OTelCore
 
+@available(macOSAligned 13, *)
 extension OTLPGRPCMetricExporterConfiguration {
     package init(configuration: OTel.Configuration.OTLPExporterConfiguration) throws {
         try self.init(
@@ -24,6 +25,7 @@ extension OTLPGRPCMetricExporterConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTLPGRPCSpanExporterConfiguration {
     package init(configuration: OTel.Configuration.OTLPExporterConfiguration) throws {
         try self.init(

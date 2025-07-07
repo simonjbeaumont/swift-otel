@@ -14,6 +14,7 @@
 package import OTelCore
 
 /// An in-memory span exporter, collecting exported batches into ``OTelInMemorySpanExporter/exportedBatches``.
+@available(macOSAligned 13, *)
 package final actor OTelInMemorySpanExporter: OTelSpanExporter {
     package private(set) var exportedBatches = [[OTelFinishedSpan]]()
     package private(set) var numberOfShutdowns = 0

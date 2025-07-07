@@ -15,6 +15,7 @@ import Logging
 package import OTelCore
 import OTLPCore
 
+@available(macOSAligned 13, *)
 package final class OTLPHTTPSpanExporter: OTelSpanExporter {
     typealias Request = Opentelemetry_Proto_Collector_Trace_V1_ExportTraceServiceRequest
     typealias Response = Opentelemetry_Proto_Collector_Trace_V1_ExportTraceServiceResponse

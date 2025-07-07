@@ -15,6 +15,7 @@ package import Logging
 import Tracing
 
 /// A type facilitating the resource detection process using a configurable set of resource detectors.
+@available(macOSAligned 13, *)
 package struct OTelResourceDetection<Clock: _Concurrency.Clock>: Sendable where Clock.Duration == Duration {
     /// The resource detectors to be run when calling ``resource(environment:logLevel:)``.
     package var detectors: [any OTelResourceDetector]
@@ -130,6 +131,7 @@ package struct OTelResourceDetection<Clock: _Concurrency.Clock>: Sendable where 
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelResourceDetection where Clock == ContinuousClock {
     /// Create a resource detection with the provided detectors and timeout.
     ///

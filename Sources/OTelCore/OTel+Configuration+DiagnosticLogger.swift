@@ -15,6 +15,7 @@ import class Foundation.ProcessInfo
 package import Logging
 import NIOConcurrencyHelpers
 
+@available(macOSAligned 13, *)
 extension OTel {
     fileprivate static let lockedDiagnosticsLogger = NIOLockedValueBox(Logger(label: "swift-otel", factory: { label in StreamLogHandler.standardError(label: label) }))
     package static var diagnosticsLogger: Logger {
@@ -27,6 +28,7 @@ extension OTel {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration {
     package var _diagnosticLogger: Logger {
         var logger = switch self.diagnosticLogger.backing {
@@ -54,6 +56,7 @@ extension OTel.Configuration {
     }()
 }
 
+@available(macOSAligned 13, *)
 extension Logger {
     package init(configuration: OTel.Configuration) {
         self = switch configuration.diagnosticLogger.backing {

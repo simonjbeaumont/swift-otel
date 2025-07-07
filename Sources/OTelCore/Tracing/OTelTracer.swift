@@ -20,6 +20,7 @@ import W3CTraceContext
 /// An OpenTelemetry tracer implementing the Swift Distributed Tracing `Tracer` protocol.
 ///
 /// [OpenTelemetry Specification: Tracer](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.20.0/specification/trace/api.md#tracer)
+@available(macOSAligned 13, *)
 package final class OTelTracer<
     IDGenerator: OTelIDGenerator,
     Sampler: OTelSampler,
@@ -63,6 +64,7 @@ package final class OTelTracer<
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelTracer where Clock == ContinuousClock {
     /// Create a new tracer.
     ///
@@ -93,6 +95,7 @@ extension OTelTracer where Clock == ContinuousClock {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelTracer: Service {
     package func run() async throws {
         try await withGracefulShutdownHandler {
@@ -131,6 +134,7 @@ extension OTelTracer: Service {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelTracer: Tracer {
     package func startSpan(
         _ operationName: String,
@@ -228,6 +232,7 @@ extension OTelTracer: Tracer {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelTracer: Instrument {
     package func inject<Carrier, Inject>(
         _ context: ServiceContext,
@@ -255,6 +260,7 @@ extension OTelTracer: Instrument {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelTracer: CustomStringConvertible {
     package var description: String { "OTelTracer" }
 }

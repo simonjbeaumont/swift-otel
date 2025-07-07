@@ -12,6 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /// The configuration options for an ``OTelBatchLogRecordProcessor``.
+@available(macOSAligned 13, *)
 package struct OTelBatchLogRecordProcessorConfiguration: Sendable {
     /// The maximum queue size.
     ///

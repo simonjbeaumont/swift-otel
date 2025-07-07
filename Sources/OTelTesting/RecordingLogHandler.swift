@@ -14,6 +14,7 @@
 package import Logging
 package import NIOConcurrencyHelpers
 
+@available(macOSAligned 13, *)
 package struct RecordingLogHandler: LogHandler {
     package typealias LogFunctionCall = (level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?)
 
@@ -56,6 +57,7 @@ package struct RecordingLogHandler: LogHandler {
     }
 }
 
+@available(macOSAligned 13, *)
 extension RecordingLogHandler {
     package var warningCount: Int {
         counts.withLockedValue { $0[.warning, default: 0] }

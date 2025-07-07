@@ -12,6 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /// The configuration options for an ``OTelPeriodicExportingMetricsReader``.
+@available(macOSAligned 13, *)
 package struct OTelPeriodicExportingMetricsReaderConfiguration: Sendable {
     /// The time interval between the start of two export attempts.
     package var exportInterval: Duration

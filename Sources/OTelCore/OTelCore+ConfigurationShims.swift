@@ -14,6 +14,7 @@
 import Logging
 import Tracing
 
+@available(macOSAligned 13, *)
 extension OTelResource {
     package init(configuration: OTel.Configuration) {
         let attributes = configuration.resourceAttributes.mapValues { $0.toSpanAttribute() }
@@ -21,6 +22,7 @@ extension OTelResource {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelBatchLogRecordProcessorConfiguration {
     package init(configuration: OTel.Configuration.LogsConfiguration.BatchLogRecordProcessorConfiguration) {
         self.init(
@@ -33,6 +35,7 @@ extension OTelBatchLogRecordProcessorConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelPeriodicExportingMetricsReaderConfiguration {
     package init(configuration: OTel.Configuration.MetricsConfiguration) {
         self.init(
@@ -43,6 +46,7 @@ extension OTelPeriodicExportingMetricsReaderConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelBatchSpanProcessorConfiguration {
     package init(configuration: OTel.Configuration.TracesConfiguration.BatchSpanProcessorConfiguration) {
         self.init(
@@ -55,6 +59,7 @@ extension OTelBatchSpanProcessorConfiguration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension Logging.Logger.Level {
     package init(_ level: OTel.Configuration.LogLevel) {
         switch level.backing {

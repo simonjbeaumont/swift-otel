@@ -27,6 +27,7 @@
 package import CoreMetrics
 
 /// A Swift Metrics `MetricsFactory` implementation backed by ``OTelMetricRegistry``.
+@available(macOSAligned 13, *)
 package struct OTLPMetricsFactory: Sendable {
     private static let _defaultRegistry = OTelMetricRegistry()
 
@@ -53,6 +54,7 @@ package struct OTLPMetricsFactory: Sendable {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTLPMetricsFactory {
     /// Configuration options for the metrics factory.
     ///
@@ -156,6 +158,7 @@ extension OTLPMetricsFactory {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTLPMetricsFactory: CoreMetrics.MetricsFactory {
     package func makeCounter(label: String, dimensions: [(String, String)]) -> CoreMetrics.CounterHandler {
         guard let (label, dimensions) = configuration.registrationPreprocessor(label, dimensions) else {
@@ -248,6 +251,7 @@ extension OTLPMetricsFactory: CoreMetrics.MetricsFactory {
 
 // MARK: - Helpers
 
+@available(macOSAligned 13, *)
 extension OTLPMetricsFactory {
     /// Returns the values for keys `unit` and `description`, if they are present in the array.
     private func extractIdentifyingFieldsAndAttributes(from dimensions: [(String, String)]) -> (unit: String?, description: String?, Set<Attribute>) {

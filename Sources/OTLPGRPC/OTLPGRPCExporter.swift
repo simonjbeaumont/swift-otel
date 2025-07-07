@@ -18,6 +18,7 @@ import Logging
 import OTelCore
 
 /// Unifying protocol for shared OTLP/gRPC exporter across signals.
+@available(macOSAligned 15, *)
 protocol OTLPGRPCClient<Transport, Request, Response> where Response: Sendable, Transport: ClientTransport {
     associatedtype Transport
     associatedtype Request
@@ -33,10 +34,14 @@ protocol OTLPGRPCClient<Transport, Request, Response> where Response: Sendable, 
     ) async throws -> Result where Result: Sendable
 }
 
+@available(macOSAligned 15, *)
 extension Opentelemetry_Proto_Collector_Logs_V1_LogsService.Client: OTLPGRPCClient {}
+@available(macOSAligned 15, *)
 extension Opentelemetry_Proto_Collector_Metrics_V1_MetricsService.Client: OTLPGRPCClient {}
+@available(macOSAligned 15, *)
 extension Opentelemetry_Proto_Collector_Trace_V1_TraceService.Client: OTLPGRPCClient {}
 
+@available(macOSAligned 15, *)
 final class OTLPGRPCExporter<Client: OTLPGRPCClient>: Sendable where Client.Transport == HTTP2ClientTransport.Posix {
     private let logger = Logger(label: "OTLPGRPCExporter")
     private let client: GRPCClient<HTTP2ClientTransport.Posix>
@@ -84,6 +89,7 @@ enum OTLPGRPCExporterError: Swift.Error {
     case invalidProtocol
 }
 
+@available(macOSAligned 15, *)
 extension HTTP2ClientTransport.Posix.Config {
     init(_ configuration: OTel.Configuration.OTLPExporterConfiguration) {
         self = .defaults
@@ -94,6 +100,7 @@ extension HTTP2ClientTransport.Posix.Config {
     }
 }
 
+@available(macOSAligned 15, *)
 extension CallOptions {
     init(_ configuration: OTel.Configuration.OTLPExporterConfiguration) {
         self = .defaults
@@ -107,6 +114,7 @@ extension CallOptions {
     }
 }
 
+@available(macOSAligned 15, *)
 extension HTTP2ClientTransport.Posix {
     init(_ configuration: OTel.Configuration.OTLPExporterConfiguration) throws {
         guard
@@ -158,6 +166,7 @@ extension HTTP2ClientTransport.Posix {
     }
 }
 
+@available(macOSAligned 15, *)
 extension Metadata {
     init(_ configuration: OTel.Configuration.OTLPExporterConfiguration) {
         self.init()

@@ -15,6 +15,7 @@ import Logging
 package import OTelCore
 import OTLPCore
 
+@available(macOSAligned 13, *)
 package final class OTLPHTTPLogRecordExporter: OTelLogRecordExporter {
     typealias Request = Opentelemetry_Proto_Collector_Logs_V1_ExportLogsServiceRequest
     typealias Response = Opentelemetry_Proto_Collector_Logs_V1_ExportLogsServiceResponse

@@ -14,6 +14,7 @@
 package import Logging
 private import ServiceContextModule
 
+@available(macOSAligned 13, *)
 extension Logger.MetadataProvider {
     /// A metadata provider exposing the current trace and span ID.
     ///

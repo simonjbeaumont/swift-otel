@@ -11,6 +11,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration {
     /// An environment variable key used to lookup OTel configuration overrides.
     internal enum Key {
@@ -35,6 +36,7 @@ extension OTel.Configuration {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.Key.GeneralKey {
     static let resourceAttributes = Self(key: "OTEL_RESOURCE_ATTRIBUTES")
     static let serviceName = Self(key: "OTEL_SERVICE_NAME")
@@ -55,6 +57,7 @@ extension OTel.Configuration.Key.GeneralKey {
     static let batchLogRecordProcessorExportBatchSize = Self(key: "OTEL_BLRP_EXPORT_BATCH_SIZE")
 }
 
+@available(macOSAligned 13, *)
 extension OTel.Configuration.Key.SignalSpecificKey {
     private static func otlpExporterKey(suffix: String) -> Self {
         Self(
@@ -76,6 +79,7 @@ extension OTel.Configuration.Key.SignalSpecificKey {
     static let otlpExporterProtocol = Self.otlpExporterKey(suffix: "PROTOCOL")
 }
 
+@available(macOSAligned 13, *)
 extension [String: String] {
     func getStringValue(_ lookup: OTel.Configuration.Key) -> String? {
         switch lookup {
@@ -134,6 +138,7 @@ extension [String: String] {
 }
 
 /// Overloads for general and signal-specific keys to simplify lookups at the callsite.
+@available(macOSAligned 13, *)
 extension [String: String] {
     func getStringValue(_ key: OTel.Configuration.Key.GeneralKey) -> String? {
         self[key.key]

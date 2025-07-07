@@ -16,6 +16,7 @@ package import ServiceContextModule
 
 /// An in-memory span processor, collecting started spans into ``OTelInMemorySpanProcessor/startedSpans``
 /// and finished spans into ``OTelInMemorySpanProcessor/finishedSpans``.
+@available(macOSAligned 13, *)
 package final actor OTelInMemorySpanProcessor: OTelSpanProcessor {
     package private(set) var startedSpans = [(span: OTelSpan, parentContext: ServiceContext)]()
     package private(set) var finishedSpans = [OTelFinishedSpan]()

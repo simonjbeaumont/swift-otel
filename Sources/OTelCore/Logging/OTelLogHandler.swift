@@ -17,6 +17,7 @@ import NIOConcurrencyHelpers
 import ServiceLifecycle
 import Tracing
 
+@available(macOSAligned 13, *)
 package struct OTelLogHandler: Sendable, LogHandler {
     package var metadata: Logger.Metadata
     package var logLevel: Logger.Level

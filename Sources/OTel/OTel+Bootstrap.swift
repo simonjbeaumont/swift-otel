@@ -19,6 +19,7 @@ import Tracing
 
 // MARK: - API
 
+@available(macOSAligned 13, *)
 extension OTel {
     /// Bootstrap observability backends with OTLP exporters.
     ///
@@ -108,7 +109,6 @@ extension OTel {
     /// let serviceGroup = ServiceGroup(services: [observability, server], logger: .init(label: "ServiceGroup"))
     /// try await serviceGroup.run()
     /// ```
-    @available(macOSAligned 13, *)
     public static func bootstrap(configuration: Configuration = .default) throws -> some Service {
         try Self.bootstrap(configuration: configuration, environment: ProcessInfo.processInfo.environment)
     }
@@ -116,6 +116,7 @@ extension OTel {
 
 // MARK: - Internal
 
+@available(macOSAligned 13, *)
 extension OTel {
     internal static func bootstrap(configuration: Configuration = .default, environment: [String: String]) throws -> some Service {
         var configuration = configuration

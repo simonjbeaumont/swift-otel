@@ -22,6 +22,7 @@ import SwiftProtobuf
 import struct Foundation.Data
 import struct Foundation.URL
 
+@available(macOSAligned 13, *)
 final class OTLPHTTPExporter<Request: Message, Response: Message>: Sendable {
     let configuration: OTel.Configuration.OTLPExporterConfiguration
     let httpClient: HTTPClient
@@ -120,6 +121,7 @@ enum OTLPHTTPExporterError: Swift.Error {
     case partialMTLSdConfiguration
 }
 
+@available(macOSAligned 13, *)
 extension HTTPClient {
     fileprivate convenience init(configuration: OTel.Configuration.OTLPExporterConfiguration) throws {
         try self.init(
@@ -129,6 +131,7 @@ extension HTTPClient {
     }
 }
 
+@available(macOSAligned 13, *)
 extension HTTPClient.Configuration {
     fileprivate init(configuration: OTel.Configuration.OTLPExporterConfiguration) throws {
         self = .singletonConfiguration

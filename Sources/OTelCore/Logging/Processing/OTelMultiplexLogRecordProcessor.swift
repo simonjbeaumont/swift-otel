@@ -15,6 +15,7 @@ import ServiceContextModule
 import ServiceLifecycle
 
 /// A pseudo-``OTelLogRecordProcessor`` that may be used to process using multiple other ``OTelLogRecordProcessor``s.
+@available(macOSAligned 13, *)
 package actor OTelMultiplexLogRecordProcessor: OTelLogRecordProcessor {
     private let processors: [any OTelLogRecordProcessor]
     private let shutdownStream: AsyncStream<Void>

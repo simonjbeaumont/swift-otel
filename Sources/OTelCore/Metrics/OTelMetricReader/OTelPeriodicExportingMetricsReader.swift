@@ -15,6 +15,7 @@ import AsyncAlgorithms
 import Logging
 import ServiceLifecycle
 
+@available(macOSAligned 13, *)
 package struct OTelPeriodicExportingMetricsReader<Clock: _Concurrency.Clock> where Clock.Duration == Duration {
     private let logger = Logger(label: "OTelPeriodicExportingMetricsReader")
 
@@ -63,6 +64,7 @@ package struct OTelPeriodicExportingMetricsReader<Clock: _Concurrency.Clock> whe
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelPeriodicExportingMetricsReader: CustomStringConvertible, Service {
     package var description: String { "OTelPeriodicExportingMetricsReader" }
 
@@ -83,6 +85,7 @@ extension OTelPeriodicExportingMetricsReader: CustomStringConvertible, Service {
     }
 }
 
+@available(macOSAligned 13, *)
 extension OTelPeriodicExportingMetricsReader where Clock == ContinuousClock {
     /// Create a new ``OTelPeriodicExportingMetricsReader``.
     ///

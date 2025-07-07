@@ -20,6 +20,7 @@ package import ServiceContextModule
 /// since it will lead to an unnecessary amount of network calls within the exporter. Instead it is recommended
 /// to use a batching span processor such as ``OTelBatchSpanProcessor`` that will forward multiple spans
 /// to the exporter at once.
+@available(macOSAligned 13, *)
 package struct OTelSimpleSpanProcessor<Exporter: OTelSpanExporter>: OTelSpanProcessor {
     private let exporter: Exporter
     private let stream: AsyncStream<OTelFinishedSpan>

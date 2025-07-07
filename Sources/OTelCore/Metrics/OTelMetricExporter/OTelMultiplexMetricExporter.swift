@@ -12,6 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /// A metric exporter that delegates to multiple other exports.
+@available(macOSAligned 13, *)
 package struct OTelMultiplexMetricExporter: OTelMetricExporter {
     private let exporters: [any OTelMetricExporter]
 

@@ -15,6 +15,7 @@
 package import ServiceContextModule
 package import Tracing
 
+@available(macOSAligned 13, *)
 extension OTelSpan {
     /// A no-op span stub.
     ///
