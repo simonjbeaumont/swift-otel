@@ -108,6 +108,7 @@ extension OTel {
     /// let serviceGroup = ServiceGroup(services: [observability, server], logger: .init(label: "ServiceGroup"))
     /// try await serviceGroup.run()
     /// ```
+    @available(macOSAligned 13, *)
     public static func bootstrap(configuration: Configuration = .default) throws -> some Service {
         try Self.bootstrap(configuration: configuration, environment: ProcessInfo.processInfo.environment)
     }

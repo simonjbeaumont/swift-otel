@@ -109,6 +109,7 @@ extension OTel {
     ///   - `OTel.makeMetricsBackend(configuration:)` for metrics backend creation
     ///   - `OTel.makeTracingBackend(configuration:)` for tracing backend creation
     ///   - `OTel.Configuration` for configuration options and environment variables
+    @available(macOSAligned 13, *)
     public static func makeLoggingBackend(configuration: OTel.Configuration = .default) throws -> (factory: @Sendable (String) -> any LogHandler, service: some Service) {
         /// This is necessary because the processor is generic over the exporter and we need to return an opaque type.
         struct Wrapper: Service {
@@ -242,6 +243,7 @@ extension OTel {
     ///   - `OTel.makeLoggingBackend(configuration:)` for logging backend creation
     ///   - `OTel.makeTracingBackend(configuration:)` for tracing backend creation
     ///   - `OTel.Configuration` for configuration options and environment variables
+    @available(macOSAligned 13, *)
     public static func makeMetricsBackend(configuration: OTel.Configuration = .default) throws -> (factory: any MetricsFactory, service: some Service) {
         let resource = OTelResource(configuration: configuration)
         let registry = OTelMetricRegistry()
@@ -360,6 +362,7 @@ extension OTel {
     ///   - `OTel.makeLoggingBackend(configuration:)` for logging backend creation
     ///   - `OTel.makeMetricsBackend(configuration:)` for metrics backend creation
     ///   - `OTel.Configuration` for configuration options and environment variables
+    @available(macOSAligned 13, *)
     public static func makeTracingBackend(configuration: OTel.Configuration = .default) throws -> (factory: any Tracer, service: some Service) {
         /// This dance is necessary if we want to continue to return `some Service` (vs. returning `any Service`).
         ///

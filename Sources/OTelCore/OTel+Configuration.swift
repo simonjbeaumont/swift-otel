@@ -55,6 +55,7 @@ extension OTel {
     ///   - [](https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter)
     ///   - [](https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables)
     ///   - [](https://opentelemetry.io/docs/specs/otel/protocol/exporter#configuration-options)
+    @available(macOSAligned 13, *)
     public struct Configuration: Sendable {
         /// The logical name of the service that generates telemetry data.
         ///
@@ -147,6 +148,7 @@ extension OTel {
 
 extension OTel.Configuration {
     /// Logger to use for internal diagnostics.
+    @available(macOSAligned 13, *)
     public struct DiagnosticLoggerSelection: Sendable {
         package enum Backing: Sendable {
             case console
@@ -171,6 +173,7 @@ extension OTel.Configuration {
     /// Controls the minimum severity level for diagnostic output.
     ///
     /// This option is ignored for custom loggers.
+    @available(macOSAligned 13, *)
     public struct LogLevel: Sendable {
         package enum Backing: String, Sendable {
             case error
@@ -204,6 +207,7 @@ extension OTel.Configuration {
     ///
     /// Propagators handle the injection and extraction of trace context and baggage
     /// from carriers such as HTTP headers, enabling trace continuity in distributed systems.
+    @available(macOSAligned 13, *)
     public struct Propagator: Sendable {
         package enum Backing: String, CaseIterable, Sendable {
             case traceContext = "tracecontext"
@@ -255,6 +259,7 @@ extension OTel.Configuration {
     ///
     /// Controls all aspects of trace collection, processing, and export including span processors,
     /// exporters, and OTLP-specific settings.
+    @available(macOSAligned 13, *)
     public struct TracesConfiguration: Sendable {
         /// Whether tracing is enabled.
         ///
@@ -293,6 +298,7 @@ extension OTel.Configuration {
     /// Configuration for metrics collection and export.
     ///
     /// Controls metric instrument registration, aggregation, and periodic export behavior.
+    @available(macOSAligned 13, *)
     public struct MetricsConfiguration: Sendable {
         /// Whether metrics collection is enabled.
         ///
@@ -340,6 +346,7 @@ extension OTel.Configuration {
     ///
     /// Controls log record collection and export behavior for application logs that are
     /// integrated with OpenTelemetry observability.
+    @available(macOSAligned 13, *)
     public struct LogsConfiguration: Sendable {
         /// Whether log signal collection is enabled.
         ///
@@ -387,6 +394,7 @@ extension OTel.Configuration.TracesConfiguration {
     ///
     /// The batch processor collects spans in memory and exports them in batches to improve
     /// performance and reduce network overhead.
+    @available(macOSAligned 13, *)
     public struct BatchSpanProcessorConfiguration: Sendable {
         /// Maximum time to wait before triggering an export.
         ///
@@ -431,6 +439,7 @@ extension OTel.Configuration.TracesConfiguration {
     /// Selection of trace exporter implementation.
     ///
     /// Determines how completed spans are exported from the application to observability backends.
+    @available(macOSAligned 13, *)
     public struct ExporterSelection: Sendable {
         package enum Backing: Sendable {
             case otlp
@@ -459,6 +468,7 @@ extension OTel.Configuration.MetricsConfiguration {
     /// Selection of metrics exporter implementation.
     ///
     /// Determines how collected metrics are exported from the application to observability backends.
+    @available(macOSAligned 13, *)
     public struct ExporterSelection: Sendable {
         package enum Backing: Sendable {
             case otlp
@@ -483,6 +493,7 @@ extension OTel.Configuration.LogsConfiguration {
     /// Selection of logs exporter implementation.
     ///
     /// Determines how log records are exported from the application to observability backends.
+    @available(macOSAligned 13, *)
     public struct ExporterSelection: Sendable {
         package enum Backing: Sendable {
             case otlp
@@ -504,6 +515,7 @@ extension OTel.Configuration.LogsConfiguration {
     ///
     /// The batch processor collects log records in memory and exports them in batches to improve
     /// performance and reduce network overhead.
+    @available(macOSAligned 13, *)
     public struct BatchLogRecordProcessorConfiguration: Sendable {
         /// Maximum time to wait before triggering an export.
         ///
@@ -553,6 +565,7 @@ extension OTel.Configuration {
     ///
     /// Signal-specific environment variables take precedence over general ones, allowing
     /// fine-grained control over traces, metrics, and logs export behavior.
+    @available(macOSAligned 13, *)
     public struct OTLPExporterConfiguration: Sendable {
         /// Target URL to which the exporter sends spans, metrics, or logs.
         ///
@@ -706,6 +719,7 @@ extension OTel.Configuration.OTLPExporterConfiguration {
     ///
     /// Controls whether and how telemetry data is compressed before transmission to reduce
     /// network bandwidth usage.
+    @available(macOSAligned 13, *)
     public struct Compression: Sendable {
         package enum Backing {
             case gzip
@@ -726,6 +740,7 @@ extension OTel.Configuration.OTLPExporterConfiguration {
     /// Determines the wire format and transport mechanism used for exporting telemetry data
     /// via the OpenTelemetry Protocol.
     // swiftformat:disable:next redundantBackticks
+    @available(macOSAligned 13, *)
     public struct `Protocol`: Equatable, Sendable {
         package enum Backing {
             case grpc
