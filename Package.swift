@@ -4,6 +4,12 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .enableExperimentalFeature("StrictConcurrency=complete"),
     .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableExperimentalFeature("AvailabilityMacro=macOSAligned 10.15 : macOS 10.15, iOS 13, tvOS 13, watchOS 6"),
+    .enableExperimentalFeature("AvailabilityMacro=macOSAligned 13 : macOS 13, iOS 16, tvOS 16, watchOS 9"),
+    .enableExperimentalFeature("AvailabilityMacro=macOSAligned 15 : macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2"),
+    .enableExperimentalFeature("AvailabilityMacro=gRPCSwift 2 : macOS 15, iOS 18, tvOS 18, watchOS 11, visionOS 2"),
+    .enableExperimentalFeature("AvailabilityMacro=macOSAligned 26 : macOS 26, iOS 26, tvOS 26, watchOS 26, visionOS 26"),
+    .unsafeFlags(["-require-explicit-availability"]),
 ]
 
 let package = Package(
